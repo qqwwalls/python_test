@@ -1,0 +1,41 @@
+{
+  "tool": "Built-in ImageGen",
+  "hero": {
+    "file": "static/images/fruit-hero.png",
+    "prompt": "Use case: product-mockup. Wide 3:1 photorealistic grocery-store website banner. Right 55%: shallow wooden bowl overflowing with oranges, red apples, strawberries, bananas, green and dark grapes and one green apple. Left 45%: uncluttered very pale green studio backdrop, almost white, with completely empty negative space for HTML text. Bright realistic food photography, soft studio daylight, subtle grounding shadows, no text, typography, logos, watermark, UI, collage or split panels."
+  },
+  "products": [
+    {
+      "file": "static/images/banana-bunch.png",
+      "prompt": "Use case: product-mockup. Asset type: grocery online store product catalog photo. A professional realistic studio photograph of a compact beautiful bunch of five ripe bright yellow bananas, all whole and unpeeled, angled naturally. Center the entire compact arrangement, fully visible with generous white margins on every side, on a pure seamless WHITE background. Square 1:1 composition. Eye-level three-quarter view, natural soft studio daylight, realistic fruit surfaces, fresh saturated appetizing colors, delicate soft grey contact shadow below. Consistent clean commercial grocery photography, not an illustration or icon, no lettering, no labels, no watermark, no border, no props except those specified. The fruit should occupy about 78 percent of the image width and height."
+    },
+    {
+      "file": "static/images/apple.png",
+      "prompt": "Use case: product-mockup. Asset type: grocery online store product catalog photo. A professional realistic studio photograph of two glossy red apples with one freshly cut half showing cream flesh and seeds, a small natural green leaf. Center the entire compact arrangement, fully visible with generous white margins on every side, on a pure seamless WHITE background. Square 1:1 composition. Eye-level three-quarter view, natural soft studio daylight, realistic fruit surfaces, fresh saturated appetizing colors, delicate soft grey contact shadow below. Consistent clean commercial grocery photography, not an illustration or icon, no lettering, no labels, no watermark, no border, no props except those specified. The fruit should occupy about 78 percent of the image width and height."
+    },
+    {
+      "file": "static/images/orange-whole.png",
+      "prompt": "Use case: product-mockup. Asset type: grocery online store product catalog photo. A professional realistic studio photograph of three ripe whole oranges with green leaves and one sliced orange half showing juicy bright orange pulp. Center the entire compact arrangement, fully visible with generous white margins on every side, on a pure seamless WHITE background. Square 1:1 composition. Eye-level three-quarter view, natural soft studio daylight, realistic fruit surfaces, fresh saturated appetizing colors, delicate soft grey contact shadow below. Consistent clean commercial grocery photography, not an illustration or icon, no lettering, no labels, no watermark, no border, no props except those specified. The fruit should occupy about 78 percent of the image width and height."
+    },
+    {
+      "file": "static/images/strawberry.png",
+      "prompt": "Use case: product-mockup. Asset type: grocery online store product catalog photo. A professional realistic studio photograph of a compact generous pile of ripe vivid red strawberries with fresh green tops. Center the entire compact arrangement, fully visible with generous white margins on every side, on a pure seamless WHITE background. Square 1:1 composition. Eye-level three-quarter view, natural soft studio daylight, realistic fruit surfaces, fresh saturated appetizing colors, delicate soft grey contact shadow below. Consistent clean commercial grocery photography, not an illustration or icon, no lettering, no labels, no watermark, no border, no props except those specified. The fruit should occupy about 78 percent of the image width and height."
+    },
+    {
+      "file": "static/images/blueberry.png",
+      "prompt": "Use case: product-mockup. Asset type: grocery online store product catalog photo. A professional realistic studio photograph of a small light wooden bowl filled with fresh deep blue blueberries and a few berries beside it. Center the entire compact arrangement, fully visible with generous white margins on every side, on a pure seamless WHITE background. Square 1:1 composition. Eye-level three-quarter view, natural soft studio daylight, realistic fruit surfaces, fresh saturated appetizing colors, delicate soft grey contact shadow below. Consistent clean commercial grocery photography, not an illustration or icon, no lettering, no labels, no watermark, no border, no props except those specified. The fruit should occupy about 78 percent of the image width and height."
+    },
+    {
+      "file": "static/images/grapes.png",
+      "prompt": "Use case: product-mockup. Asset type: grocery online store product catalog photo. A professional realistic studio photograph of two compact fresh bunches of grapes, one light green and one purple-red, with a small green leaf. Center the entire compact arrangement, fully visible with generous white margins on every side, on a pure seamless WHITE background. Square 1:1 composition. Eye-level three-quarter view, natural soft studio daylight, realistic fruit surfaces, fresh saturated appetizing colors, delicate soft grey contact shadow below. Consistent clean commercial grocery photography, not an illustration or icon, no lettering, no labels, no watermark, no border, no props except those specified. The fruit should occupy about 78 percent of the image width and height."
+    },
+    {
+      "file": "static/images/kiwi-cut.png",
+      "prompt": "Use case: product-mockup. Asset type: grocery online store product catalog photo. A professional realistic studio photograph of two whole brown fuzzy kiwifruits and one cut in half to show vivid green flesh and black seeds. Center the entire compact arrangement, fully visible with generous white margins on every side, on a pure seamless WHITE background. Square 1:1 composition. Eye-level three-quarter view, natural soft studio daylight, realistic fruit surfaces, fresh saturated appetizing colors, delicate soft grey contact shadow below. Consistent clean commercial grocery photography, not an illustration or icon, no lettering, no labels, no watermark, no border, no props except those specified. The fruit should occupy about 78 percent of the image width and height."
+    },
+    {
+      "file": "static/images/mango.png",
+      "prompt": "Use case: product-mockup. Asset type: grocery online store product catalog photo. A professional realistic studio photograph of one beautiful whole red-yellow mango and a golden mango cheek cut into a hedgehog grid, a small green leaf. Center the entire compact arrangement, fully visible with generous white margins on every side, on a pure seamless WHITE background. Square 1:1 composition. Eye-level three-quarter view, natural soft studio daylight, realistic fruit surfaces, fresh saturated appetizing colors, delicate soft grey contact shadow below. Consistent clean commercial grocery photography, not an illustration or icon, no lettering, no labels, no watermark, no border, no props except those specified. The fruit should occupy about 78 percent of the image width and height."
+    }
+  ]
+}

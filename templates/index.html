@@ -3,10 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Головна сторінка</title>
+    <meta name="theme-color" content="#07853e">
+    <meta name="description" content="FruitMarket — свіжі фрукти та ягоди. Обирайте улюблені фрукти в нашому каталозі.">
+    <title>FruitMarket — свіжі фрукти та ягоди</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/orange-whole.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/store.css') }}">
+    <script src="{{ url_for('static', filename='vendor/lucide.min.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/store.js') }}" defer></script>
 </head>
 <body>
-    <h1>Головна сторінка</h1>
-    <p>Вітаємо!</p>
+    <a class="skip-link" href="#catalog">До каталогу</a>
+    <header class="site-header">
+        <div class="header-inner page-width">
+            <a class="brand" href="{{ url_for('home') }}" aria-label="FruitMarket — головна">
+                <span class="brand-mark" aria-hidden="true">
+                    <img src="{{ url_for('static', filename='images/apple.png') }}" alt="">
+                    <img src="{{ url_for('static', filename='images/orange-whole.png') }}" alt="">
+                </span>
+                <span><b>Fruit</b>Market</span>
+            </a>
+            <nav class="site-nav" id="site-nav" aria-label="Головне меню">
+                <a class="active" href="{{ url_for('home') }}" aria-current="page">Головна</a>
+                <a href="#catalog">Каталог</a>
+                <button type="button" data-info="about">Про нас</button>
+                <button type="button" data-info="delivery">Доставка</button>
+                <button type="button" data-info="contacts">Контакти</button>
+            </nav>
+            <form class="search" role="search" id="search-form">
+                <label class="sr-only" for="search">Пошук фруктів</label>
+                <input id="search" name="search" type="search" placeholder="Пошук фруктів…" autocomplete="off">
+                <button type="submit" title="Знайти" aria-label="Знайти"><i data-lucide="search"></i></button>
+            </form>
+            <div class="header-actions">
+                <button class="icon-button" type="button" data-open="profile-dialog" title="Особисті дані" aria-label="Особисті дані"><i data-lucide="user-round"></i></button>
+                <button class="icon-button cart-toggle" type="button" id="cart-toggle" data-open="cart-dialog" title="Кошик" aria-label="Відкрити кошик">
+                    <i data-lucide="shopping-cart"></i><span class="cart-badge" id="cart-count" hidden>0</span>
+                </button>
+                <button class="icon-button menu-toggle" type="button" id="menu-toggle" aria-label="Відкрити меню" aria-controls="site-nav" aria-expanded="false"><i data-lucide="menu"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <main class="page-width">
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="hero-copy">
+                <p class="eyebrow">Свіжі фрукти — для здорового життя</p>
+                <h1 id="hero-title"><span>Натуральні фрукти</span><br>з усього світу</h1>
+                <p class="hero-description">Соковиті, смачні, корисні — обирай свої улюблені фрукти в нашому магазині!</p>
+                <a class="primary-button hero-button" href="#catalog">Перейти до каталогу <i data-lucide="arrow-right"></i></a>
+            </div>
+        </section>
+
+        <div class="catalog-layout" id="catalog">
+            <aside class="filters" id="filters" aria-label="Фільтри каталогу">
+                <div class="filter-heading"><i data-lucide="layout-grid"></i><h2>Категорії</h2></div>
+                <div class="category-list" role="group" aria-label="Категорії фруктів">
+                    {% for category in categories %}
+                    <button type="button" class="category-button{% if category.id == 'all' %} selected{% endif %}" data-category="{{ category.id }}" aria-pressed="{{ 'true' if category.id == 'all' else 'false' }}">
+                        <img src="{{ url_for('static', filename='images/' + category.image) }}" alt="" width="24" height="24">
+                        <span>{{ category.name }}</span><small>{{ category.count }}</small>
+                    </button>
+                    {% endfor %}
+                </div>
+                <div class="filter-section">
+                    <h3>Ціна</h3>
+                    <div class="price-range" id="price-range">
+                        <div class="range-track"></div>
+                        <input type="range" id="min-price" min="20" max="350" value="20" step="5" aria-label="Мінімальна ціна">
+                        <input type="range" id="max-price" min="20" max="350" value="350" step="5" aria-label="Максимальна ціна">
+                    </div>
+                    <div class="price-labels"><output id="min-price-label" for="min-price">20 грн</output><output id="max-price-label" for="max-price">350 грн</output></div>
+                </div>
+                <div class="filter-section">
+                    <h3>Наявність</h3>
+                    <label class="checkbox-label"><input type="checkbox" id="in-stock" checked><span>В наявності</span></label>
+                </div>
+                <div class="filter-section sort-section">
+                    <label for="sort">Сортувати за</label>
+                    <div class="select-wrap"><select id="sort">
+                        <option value="popular">Популярністю</option>
+                        <option value="price-asc">Ціною: від дешевих</option>
+                        <option value="price-desc">Ціною: від дорогих</option>
+                        <option value="rating">Рейтингом</option>
+                        <option value="name">Назвою</option>
+                    </select><i data-lucide="chevron-down"></i></div>
+                </div>
+            </aside>
+
+            <section class="catalog-content" aria-labelledby="catalog-title">
+                <div class="catalog-header">
+                    <div><h2 id="catalog-title">Фрукти</h2><p id="results-count" aria-live="polite">Знайдено {{ products|length }} товарів</p></div>
+                    <div class="catalog-tools">
+                        <button class="icon-button filter-toggle" id="filter-toggle" type="button" aria-controls="filters" aria-expanded="false" title="Фільтри" aria-label="Показати фільтри"><i data-lucide="sliders-horizontal"></i></button>
+                        <div class="view-switch" role="group" aria-label="Вигляд каталогу">
+                            <button type="button" class="active" data-view="grid" title="Плитка" aria-label="Плитка" aria-pressed="true"><i data-lucide="layout-grid"></i></button>
+                            <button type="button" data-view="list" title="Список" aria-label="Список" aria-pressed="false"><i data-lucide="list"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="active-filters" id="active-filters" hidden><span id="filter-summary"></span><button type="button" data-reset>Скинути <i data-lucide="x"></i></button></div>
+                <div class="product-grid" id="product-grid">
+                    {% for product in products %}
+                    <article class="product-card" data-product-id="{{ product.id }}">
+                        <button class="product-picture" type="button" data-details="{{ product.id }}" aria-label="Детальніше: {{ product.name }}">
+                            <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="{{ product.name }}" width="220" height="155" {% if loop.index > 4 %}loading="lazy"{% endif %}>
+                        </button>
+                        <div class="product-info">
+                            <h3><button type="button" data-details="{{ product.id }}">{{ product.name }}</button></h3>
+                            <p class="product-price"><strong>{{ product.price }} грн</strong><span>/ кг</span></p>
+                            <div class="product-rating"><span class="stars" aria-label="{{ product.rating }} із 5">★★★★★</span><span>{{ product.rating }} <span class="review-count">({{ product.reviews }})</span></span></div>
+                            <button type="button" class="add-button" data-add="{{ product.id }}" aria-label="Додати {{ product.name }} в кошик"><i data-lucide="shopping-cart"></i><span>Додати в кошик</span></button>
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+                <div class="empty-state" id="empty-state" hidden><i data-lucide="search"></i><h3>Нічого не знайдено</h3><p>За цими умовами фруктів немає.</p><button class="primary-button" type="button" data-reset>Скинути фільтри</button></div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="site-footer page-width"><span>© 2026 FruitMarket</span><span>Свіжість, яку обираєш щодня</span><a href="{{ url_for('static', filename='images/credits.txt') }}">Фото та авторство</a></footer>
+
+    <dialog id="cart-dialog" class="cart-dialog" aria-labelledby="cart-title">
+        <div class="dialog-heading"><h2 id="cart-title">Ваш кошик <span id="cart-title-count"></span></h2><button class="icon-button" type="button" data-close aria-label="Закрити кошик" title="Закрити"><i data-lucide="x"></i></button></div>
+        <div id="cart-items"></div>
+        <div class="cart-footer" id="cart-footer" hidden><div><span>Разом</span><strong id="cart-total"></strong></div><button class="text-button" type="button" id="clear-cart"><i data-lucide="trash-2"></i>Очистити кошик</button></div>
+    </dialog>
+
+    <dialog id="product-dialog" class="product-dialog" aria-labelledby="detail-name">
+        <button class="icon-button dialog-close" type="button" data-close aria-label="Закрити" title="Закрити"><i data-lucide="x"></i></button>
+        <img id="detail-image" src="{{ url_for('static', filename='images/apple.png') }}" alt="" width="300" height="240">
+        <span class="stock-label"><i data-lucide="check"></i>В наявності</span>
+        <h2 id="detail-name"></h2><p id="detail-description"></p><p class="detail-price" id="detail-price"></p>
+        <button class="primary-button" type="button" id="detail-add"><i data-lucide="shopping-cart"></i>Додати в кошик</button>
+    </dialog>
+
+    <dialog id="profile-dialog" aria-labelledby="profile-title">
+        <div class="dialog-heading"><h2 id="profile-title">Особисті дані</h2><button class="icon-button" type="button" data-close aria-label="Закрити" title="Закрити"><i data-lucide="x"></i></button></div>
+        <form id="profile-form" class="profile-form"><label>Ім'я<input type="text" name="name" autocomplete="given-name" required maxlength="80"></label><label>Електронна пошта<input type="email" name="email" autocomplete="email" required maxlength="150"></label><button class="primary-button" type="submit">Зберегти</button></form>
+    </dialog>
+
+    <dialog id="info-dialog" aria-labelledby="info-title"><div class="dialog-heading"><h2 id="info-title"></h2><button class="icon-button" type="button" data-close aria-label="Закрити" title="Закрити"><i data-lucide="x"></i></button></div><div id="info-content" class="info-content"></div></dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"><i data-lucide="circle-check"></i><span></span></div>
+    <script type="application/json" id="product-data">{{ products|tojson }}</script>
 </body>
 </html>

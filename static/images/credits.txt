@@ -1,0 +1,10 @@
+FruitMarket classroom project
+
+Hero: static/images/fruit-hero.png
+Generated with the built-in ImageGen tool.
+Prompt: Create a wide 3:1 photorealistic grocery-store website banner. The right 55 percent features a shallow wooden bowl overflowing with oranges, red apples, strawberries, bananas, green and dark grapes, and one green apple. The left 45 percent is an uncluttered very pale green studio backdrop with empty space for HTML text. Bright natural food photography, subtle grounding shadows, no text, typography, logos, watermarks, UI, collage or split panels.
+
+All eight product photographs were generated with the built-in ImageGen tool.
+Saved assets and generation prompts: generation.json in this directory.
+Product images are resized exports for the website; original generated images are retained separately.
+Icons: Lucide 0.468.0, ISC License; license in static/vendor/lucide-LICENSE.txt.
