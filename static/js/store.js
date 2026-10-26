@@ -2,7 +2,7 @@
     const products = JSON.parse(document.querySelector("#product-data").textContent);
     const productMap = new Map(products.map(product => [product.id, product]));
     const grid = document.querySelector("#product-grid");
-    const cards = new Map([...grid.children].map(card => [Number(card.dataset.productId), card]));
+    const cards = new Map([...grid.children].map(card => [card.dataset.productId, card]));
     const search = document.querySelector("#search");
     const minPrice = document.querySelector("#min-price");
     const maxPrice = document.querySelector("#max-price");
@@ -95,26 +95,26 @@
         let total = 0;
         let count = 0;
         for (const [id, quantity] of Object.entries(cart)) {
-            const product = productMap.get(Number(id));
+            const product = productMap.get(id);
             if (!product) continue;
             count += quantity;
             total += product.price * quantity;
             const row = element("article", "cart-item");
             const image = element("img");
             image.src = imageFor(product);
-            image.alt = product.name;
+            image.alt = product.title;
             const info = element("div");
-            info.append(element("h3", "", product.name));
+            info.append(element("h3", "", product.title));
             info.append(element("p", "item-price", `${money(product.price)} / кг`));
             const controls = element("div", "quantity-control");
-            const minus = iconButton("minus", `Зменшити кількість: ${product.name}`);
-            const plus = iconButton("plus", `Збільшити кількість: ${product.name}`);
+            const minus = iconButton("minus", `Зменшити кількість: ${product.title}`);
+            const plus = iconButton("plus", `Збільшити кількість: ${product.title}`);
             minus.addEventListener("click", () => changeQuantity(product.id, -1));
             plus.addEventListener("click", () => changeQuantity(product.id, 1));
             plus.disabled = quantity >= 99;
             controls.append(minus, element("span", "", `${quantity} кг`), plus);
             info.append(controls);
-            const remove = iconButton("trash-2", `Видалити: ${product.name}`, "icon-button remove-item");
+            const remove = iconButton("trash-2", `Видалити: ${product.title}`, "icon-button remove-item");
             remove.addEventListener("click", () => {
                 delete cart[product.id];
                 updateCart();
@@ -156,14 +156,14 @@
     }
 
     function addToCart(id, button) {
-        const product = productMap.get(Number(id));
+        const product = productMap.get(id);
         if (!product?.available) return;
         if ((cart[product.id] || 0) >= 99) {
             notify("У кошику вже 99 кг цього товару");
             return;
         }
         changeQuantity(product.id, 1);
-        notify(`${product.name} додано до кошика`);
+        notify(`${product.title} додано до кошика`);
         const label = button?.querySelector("span");
         if (label) {
             label.textContent = "Додано";
@@ -175,7 +175,7 @@
         const query = search.value.trim().toLocaleLowerCase("uk");
         let visible = products.filter(product =>
             (category === "all" || product.categories.includes(category)) &&
-            product.name.toLocaleLowerCase("uk").includes(query) &&
+            product.title.toLocaleLowerCase("uk").includes(query) &&
             product.price >= Number(minPrice.value) && product.price <= Number(maxPrice.value) &&
             (!inStock.checked || product.available)
         );
@@ -183,8 +183,8 @@
             "price-asc": (a, b) => a.price - b.price,
             "price-desc": (a, b) => b.price - a.price,
             rating: (a, b) => b.rating - a.rating || b.reviews - a.reviews,
-            name: (a, b) => a.name.localeCompare(b.name, "uk"),
-            popular: (a, b) => a.id - b.id,
+            name: (a, b) => a.title.localeCompare(b.title, "uk"),
+            popular: () => 0,
         };
         visible.sort(comparators[sort.value] || comparators.popular);
         for (const card of cards.values()) card.hidden = true;
@@ -228,14 +228,14 @@
     }
 
     function showDetails(id) {
-        const product = productMap.get(Number(id));
+        const product = productMap.get(id);
         if (!product) return;
-        document.querySelector("#detail-name").textContent = product.name;
+        document.querySelector("#detail-name").textContent = product.title;
         document.querySelector("#detail-description").textContent = product.description;
         document.querySelector("#detail-price").textContent = `${money(product.price)} / кг`;
         const image = document.querySelector("#detail-image");
         image.src = imageFor(product);
-        image.alt = product.name;
+        image.alt = product.title;
         document.querySelector("#detail-add").dataset.add = product.id;
         openDialog("product-dialog");
     }
