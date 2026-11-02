@@ -5,7 +5,7 @@ from django.test import SimpleTestCase
 
 class StaticFilesTests(SimpleTestCase):
     def test_bootstrap_files_are_found(self):
-        for path in ('css/bootstrap.min.css', 'js/bootstrap.bundle.min.js',
+        for path in ('main/css/bootstrap.min.css', 'main/js/bootstrap.bundle.min.js',
                      'main/css/site.css', 'main/images/python.png',
                      'main/images/django.png', 'main/images/flask.svg'):
             with self.subTest(path=path):
@@ -15,8 +15,8 @@ class StaticFilesTests(SimpleTestCase):
         for path in ('/', '/about'):
             with self.subTest(path=path):
                 response = self.client.get(path)
-                self.assertContains(response, '/static/css/bootstrap.min.css')
-                self.assertContains(response, '/static/js/bootstrap.bundle.min.js')
+                self.assertContains(response, '/static/main/css/bootstrap.min.css')
+                self.assertContains(response, '/static/main/js/bootstrap.bundle.min.js')
                 self.assertNotContains(response, 'cdn.jsdelivr.net/npm/bootstrap')
 
     def test_home_renders_three_technology_cards(self):
