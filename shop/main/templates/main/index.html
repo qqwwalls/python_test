@@ -1,27 +1,33 @@
 {% extends 'main/layout.html' %}
 {% load static %}
-{% block title %}
-Main Page
-{% endblock %}
 
+{% block title %}Python Web Lab — головна{% endblock %}
 
-{%block content%}
-  <!-- Заголовок -->
-        <div class="p-5 mb-4 bg-white rounded-3 shadow-sm">
-            <h1 class="display-5 fw-bold">Вітаємо на нашому сайті!</h1>
-            <p class="fs-5 text-muted">
-                Це головна сторінка сайта
-            </p>
-            <button class="btn btn-primary">
-                Детальніше
-            </button>
+{% block content %}
+    <section class="welcome" aria-labelledby="welcome-title">
+        <div class="container">
+            <h1 id="welcome-title">Python Web Lab</h1>
+            <p class="lead text-secondary">Від перших рядків коду до власного вебсайту.</p>
+            <a class="btn btn-primary" href="#technologies">Обрати технологію</a>
         </div>
-        <section class="card mb-4" style="max-width: 320px">
-            <img src="{% static 'main/images/django.png' %}" class="card-img-top" alt="Django">
-            <div class="card-body">
-                <h4 class="card-title">Django</h4>
-                <p class="card-text">Вебфреймворк на Python для створення сайтів і вебзастосунків.</p>
-                <a href="https://www.djangoproject.com/" class="btn btn-primary">Перейти до Django</a>
+    </section>
+    <section class="container py-4" id="technologies" aria-label="Технології веброзробки">
+        <div class="row g-4">
+            {% for technology in technologies %}
+            <div class="col-md-4">
+                <article class="card technology-card h-100">
+                    <div class="technology-image {{ technology.theme }}">
+                        <img src="{% static technology.image %}" class="card-img-top" alt="{{ technology.title }}" width="280" height="180">
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <p class="technology-category text-secondary">{{ technology.category }}</p>
+                        <h2 class="card-title h4">{{ technology.title }}</h2>
+                        <p class="card-text">{{ technology.text }}</p>
+                        <a href="{{ technology.url }}" class="btn btn-outline-primary mt-auto align-self-start" aria-label="Документація {{ technology.title }}">До документації</a>
+                    </div>
+                </article>
             </div>
-        </section>
-{%endblock%}
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

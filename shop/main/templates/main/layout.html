@@ -4,107 +4,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}{%endblock%}</title>
-
-    <!-- Bootstrap 5 -->
+    <meta name="description" content="Python Web Lab: Python, Django та Flask для знайомства з веброзробкою.">
+    <title>{% block title %}Python Web Lab{% endblock %}</title>
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'main/css/site.css' %}" rel="stylesheet">
 </head>
-<body class="bg-light">
-
-    <!-- Меню -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<body>
+    <a class="visually-hidden-focusable" href="#content">До вмісту</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Головне меню">
         <div class="container">
-            <a class="navbar-brand" href="#">Мій сайт</a>
-
-            <button class="navbar-toggler" type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#mainMenu">
+            <a class="navbar-brand fw-semibold" href="{% url 'home' %}">Python Web Lab</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#mainMenu" aria-controls="mainMenu"
+                    aria-expanded="false" aria-label="Відкрити меню">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="mainMenu">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="/">Головна</a>
+                        <a class="nav-link{% if request.resolver_match.url_name == 'home' %} active{% endif %}"
+                           href="{% url 'home' %}"{% if request.resolver_match.url_name == 'home' %} aria-current="page"{% endif %}>Головна</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/about">Про нас</a>
+                        <a class="nav-link{% if request.resolver_match.url_name == 'about' %} active{% endif %}"
+                           href="{% url 'about' %}"{% if request.resolver_match.url_name == 'about' %} aria-current="page"{% endif %}>Про проєкт</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Послуги</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Контакти</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#technologies">Технології</a></li>
+                    <li class="nav-item"><a class="nav-link" href="https://github.com/qqwwalls/python_test/tree/practice-django-shop">GitHub</a></li>
                 </ul>
             </div>
         </div>
     </nav>
-
-    <!-- Основний контент -->
-    <main class="container mt-4">
-
-    {% block content %}
-        {% endblock %}
-
-        <!-- Блоки контенту -->
-        <div class="row g-4">
-
-            <div class="col-md-4">
-                <div class="card shadow-sm h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Розділ 1</h5>
-                        <p class="card-text">
-                            Тут можна розмістити інформацію про ваш сайт.
-                        </p>
-                        <a href="#" class="btn btn-outline-primary">
-                            Переглянути
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card shadow-sm h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Розділ 2</h5>
-                        <p class="card-text">
-                            Тут можна розмістити новини або корисну інформацію.
-                        </p>
-                        <a href="#" class="btn btn-outline-primary">
-                            Переглянути
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card shadow-sm h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Розділ 3</h5>
-                        <p class="card-text">
-                            Тут можна розмістити додаткові матеріали.
-                        </p>
-                        <a href="#" class="btn btn-outline-primary">
-                            Переглянути
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
+    <main id="content">
+        {% block content %}{% endblock %}
     </main>
-
-    <!-- Підвал -->
-    <footer class="bg-dark text-white text-center py-3 mt-5">
-        <div class="container">
-            <p class="mb-0">© 2026 Мій сайт. Усі права захищені.</p>
+    <footer class="site-footer bg-dark text-white py-3">
+        <div class="container d-flex flex-wrap justify-content-between gap-2">
+            <span>© {% now 'Y' %} Python Web Lab</span>
+            <span class="footer-note">Навчання починається з цікавості</span>
         </div>
     </footer>
-
-    <!-- Bootstrap JS -->
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-
 </body>
 </html>

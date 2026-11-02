@@ -1,14 +1,20 @@
 {% extends 'main/layout.html' %}
-{% block title %}
-About Page
-{% endblock %}
 
-{%block content%}
-  <!-- Заголовок -->
-        <div class="p-5 mb-4 bg-white rounded-3 shadow-sm">
-            <h1 class="display-5 fw-bold">Вітаємо на нашому сайті!</h1>
-            <p class="fs-5 text-muted">
-                Це сторінка про Нас
-            </p>
+{% block title %}Про проєкт — Python Web Lab{% endblock %}
+
+{% block content %}
+    <section class="welcome">
+        <div class="container">
+            <h1>Про Python Web Lab</h1>
+            <p class="lead text-secondary mb-0">Знайомство з веброзробкою на Python.</p>
         </div>
-{%endblock%}
+    </section>
+    <div class="container py-4">
+        <div class="about-content">
+            <h2 class="h4">Від мови до вебзастосунку</h2>
+            <p>Python допомагає опанувати основи програмування: змінні, умови, цикли та функції. Ці знання стають основою для роботи з вебфреймворками.</p>
+            <p>Django об'єднує роботу з даними, шаблонами та маршрутами. Flask дає змогу почати з невеликого застосунку й додавати потрібні можливості поступово.</p>
+            <a class="btn btn-primary" href="{% url 'home' %}#technologies">До технологій</a>
+        </div>
+    </div>
+{% endblock %}
