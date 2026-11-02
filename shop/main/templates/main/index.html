@@ -20,12 +20,16 @@
                         <img src="{% static technology.image %}" class="card-img-top" alt="{{ technology.title }}" width="280" height="180">
                     </div>
                     <div class="card-body d-flex flex-column">
-                        <p class="technology-category text-secondary">{{ technology.category }}</p>
+                        <p class="technology-category text-secondary">{{ forloop.counter }}. {{ technology.category }}</p>
                         <h2 class="card-title h4">{{ technology.title }}</h2>
                         <p class="card-text">{{ technology.text }}</p>
                         <a href="{{ technology.url }}" class="btn btn-outline-primary mt-auto align-self-start" aria-label="Документація {{ technology.title }}">До документації</a>
                     </div>
                 </article>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <p class="text-secondary">Немає даних</p>
             </div>
             {% endfor %}
         </div>

@@ -1,4 +1,5 @@
 from django.contrib.staticfiles import finders
+from django.template.loader import render_to_string
 from django.test import SimpleTestCase
 
 
@@ -21,13 +22,35 @@ class StaticFilesTests(SimpleTestCase):
     def test_home_renders_three_technology_cards(self):
         response = self.client.get('/')
         self.assertContains(response, 'class="card technology-card h-100"', count=3)
-        for technology in response.context['technologies']:
+        for number, technology in enumerate(response.context['technologies'], start=1):
             with self.subTest(title=technology['title']):
                 self.assertContains(response, technology['title'])
                 self.assertContains(response, '/static/' + technology['image'])
                 self.assertContains(response, 'href="' + technology['url'] + '"')
+                self.assertContains(response, f'{number}. {technology["category"]}')
         self.assertContains(response, 'href="#technologies"')
         self.assertNotContains(response, 'btn-solid')
+
+    def test_empty_technology_list(self):
+        html = render_to_string('main/index.html', {'technologies': []})
+        self.assertIn('Немає даних', html)
+        self.assertNotIn('class="card technology-card h-100"', html)
+
+    def test_cards_follow_template_data(self):
+        technologies = [{
+            'title': 'Test framework',
+            'category': 'Test category',
+            'text': 'Test description',
+            'image': 'main/images/django.png',
+            'url': 'https://example.com/docs/',
+            'theme': 'image-django',
+        }]
+        html = render_to_string('main/index.html', {'technologies': technologies})
+        self.assertEqual(html.count('class="card technology-card h-100"'), 1)
+        self.assertIn('Test framework', html)
+        self.assertIn('1. Test category', html)
+        self.assertIn('https://example.com/docs/', html)
+        self.assertNotIn('Немає даних', html)
 
     def test_about_has_its_own_content(self):
         response = self.client.get('/about')
