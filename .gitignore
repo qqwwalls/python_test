@@ -7,3 +7,5 @@ __pycache__/
 .env
 .env.*
 shop/staticfiles/
+personal_cv/staticfiles/
+personal_cv/db.sqlite3

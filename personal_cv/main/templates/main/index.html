@@ -1,0 +1,135 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}{{ profile.name }} — персональне CV{% endblock %}
+
+{% block content %}
+    <section class="profile-section" aria-labelledby="profile-name">
+        <div class="container">
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-3 avatar-wrap">
+                    <img class="profile-avatar" src="{{ profile.photo_url }}" alt="Нейтральний аватар профілю" width="220" height="220" referrerpolicy="no-referrer">
+                </div>
+                <div class="col-lg-9">
+                    <p class="section-label">Персональне резюме</p>
+                    <h1 id="profile-name">{{ profile.name }}</h1>
+                    <p class="profile-role">{{ profile.role }}</p>
+                    <dl class="profile-meta">
+                        <div><dt>Місто</dt><dd>{{ profile.city }}</dd></div>
+                        <div><dt>Email</dt><dd><a href="mailto:{{ profile.email }}">{{ profile.email }}</a></dd></div>
+                        <div><dt>Телефон</dt><dd><a href="tel:{{ profile.phone_link }}">{{ profile.phone }}</a></dd></div>
+                    </dl>
+                    <div class="d-flex flex-wrap gap-2 profile-actions">
+                        <a class="btn btn-primary" href="#contacts">Зв'язатися</a>
+                        <a class="btn btn-outline-secondary" href="{{ profile.github_url }}">GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cv-section" id="about" aria-labelledby="about-title">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-7">
+                    <p class="section-label">01 / Знайомство</p>
+                    <h2 id="about-title">Про себе</h2>
+                    <p class="body-copy">{{ profile.about }}</p>
+                    <h3 class="small-heading">Особисті якості</h3>
+                    <ul class="qualities-list">
+                        {% for quality in profile.qualities %}<li>{{ quality }}</li>{% endfor %}
+                    </ul>
+                </div>
+                <div class="col-lg-5 goal-column">
+                    <h3 class="small-heading">Професійна мета</h3>
+                    <p class="body-copy mb-0">{{ profile.goal }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cv-section section-muted" id="education" aria-labelledby="education-title">
+        <div class="container">
+            <p class="section-label">02 / Навчання</p>
+            <h2 id="education-title">Освіта</h2>
+            {% for item in education %}
+            <div class="row g-3 education-entry">
+                <div class="col-lg-9">
+                    <h3><a href="{{ item.url }}">{{ item.institution }}</a></h3>
+                    <p class="body-copy mb-0">{{ item.specialty }}</p>
+                </div>
+                <div class="col-lg-3 education-period">
+                    <p class="study-years">{{ item.years }}</p>
+                    <p class="study-status">{{ item.status }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="cv-section" id="skills" aria-labelledby="skills-title">
+        <div class="container">
+            <p class="section-label">03 / Компетенції</p>
+            <h2 id="skills-title">Навички</h2>
+            <div class="row g-4">
+                {% for group in skill_groups %}
+                <div class="col-sm-6 col-lg-3">
+                    <h3 class="small-heading">{{ group.title }}</h3>
+                    <ul class="skill-list">
+                        {% for skill in group.items %}<li>{{ skill }}</li>{% endfor %}
+                    </ul>
+                </div>
+                {% endfor %}
+                <div class="col-sm-6 col-lg-3">
+                    <h3 class="small-heading">Іноземні мови</h3>
+                    <ul class="skill-list language-list">
+                        {% for language in languages %}<li>{{ language.name }} <strong>{{ language.level }}</strong></li>{% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cv-section section-muted" id="projects" aria-labelledby="projects-title">
+        <div class="container">
+            <p class="section-label">04 / Практика</p>
+            <h2 id="projects-title">Навчальні проєкти</h2>
+            <div class="row g-4">
+                {% for project in projects %}
+                <div class="col-md-6 col-xl-4">
+                    <article class="card project-card h-100">
+                        <div class="card-body d-flex flex-column">
+                            <span class="project-number">0{{ forloop.counter }}</span>
+                            <h3 class="card-title">{{ project.title }}</h3>
+                            <p class="card-text">{{ project.description }}</p>
+                            <ul class="project-technologies list-unstyled d-flex flex-wrap gap-2">
+                                {% for technology in project.technologies %}<li>{{ technology }}</li>{% endfor %}
+                            </ul>
+                            <p class="project-result"><strong>Результат.</strong> {{ project.result }}</p>
+                            <a class="project-link mt-auto" href="{{ project.url }}" aria-label="Переглянути код {{ project.title }}">Переглянути код</a>
+                        </div>
+                    </article>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="cv-section contacts-section" id="contacts" aria-labelledby="contacts-title">
+        <div class="container">
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-5">
+                    <p class="section-label">05 / Зв'язок</p>
+                    <h2 id="contacts-title">Контакти</h2>
+                    <p class="mb-0 contact-location">{{ profile.name }} · {{ profile.city }}</p>
+                </div>
+                <div class="col-lg-7">
+                    <dl class="contact-details mb-0">
+                        <div><dt>Email</dt><dd><a href="mailto:{{ profile.email }}">{{ profile.email }}</a></dd></div>
+                        <div><dt>Телефон</dt><dd><a href="tel:{{ profile.phone_link }}">{{ profile.phone }}</a></dd></div>
+                        <div><dt>GitHub</dt><dd><a href="{{ profile.github_url }}">github.com/qqwwalls</a></dd></div>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
