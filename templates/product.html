@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ product.title }} — FruitMarket</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/orange-whole.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/store.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/product.css') }}">
+    <script src="{{ url_for('static', filename='vendor/lucide.min.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/store.js') }}" defer></script>
+</head>
+<body class="product-page">
+    <header class="site-header">
+        <div class="header-inner page-width">
+            <a class="brand" href="{{ url_for('home') }}" aria-label="FruitMarket — головна">
+                <span class="brand-mark" aria-hidden="true">
+                    <img src="{{ url_for('static', filename='images/apple.png') }}" alt="">
+                    <img src="{{ url_for('static', filename='images/orange-whole.png') }}" alt="">
+                </span>
+                <span><b>Fruit</b>Market</span>
+            </a>
+            <a class="catalog-link" href="{{ url_for('home') }}#catalog"><i data-lucide="layout-grid"></i>Каталог</a>
+        </div>
+    </header>
+    <main class="page-width detail-main">
+        <a class="back-link" href="{{ url_for('home') }}#catalog"><i data-lucide="arrow-left"></i>Повернутися до фруктів</a>
+        <article class="product-detail" aria-labelledby="product-title">
+            <img class="detail-photo" src="{{ url_for('static', filename='images/' + product.image) }}" alt="{{ product.title }}" width="480" height="480">
+            <div class="detail-info">
+                <span class="stock-label"><i data-lucide="{{ 'check' if product.available else 'minus' }}"></i>{{ 'В наявності' if product.available else 'Немає в наявності' }}</span>
+                <h1 id="product-title">{{ product.title }}</h1>
+                <p class="detail-rating"><span class="stars" aria-hidden="true">★★★★★</span><span>{{ product.rating }} із 5</span><span class="review-count">({{ product.reviews }} відгуків)</span></p>
+                {% if product.description %}<p class="detail-description">{{ product.description }}</p>{% endif %}
+                <p class="detail-cost"><strong>{{ product.price }} грн</strong><span>/ кг</span></p>
+                <button class="primary-button" id="detail-add" type="button"{% if not product.available %} disabled{% endif %}><i data-lucide="shopping-cart"></i><span>Додати в кошик</span></button>
+                <p class="detail-status" id="detail-status" role="status" aria-live="polite"></p>
+            </div>
+        </article>
+    </main>
+    <footer class="site-footer page-width"><span>© 2026 FruitMarket</span><a href="{{ url_for('home') }}#catalog">Усі фрукти</a></footer>
+    <script type="application/json" id="product-data">{{ product_data|tojson }}</script>
+</body>
+</html>

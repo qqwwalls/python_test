@@ -105,11 +105,11 @@
                 <div class="product-grid" id="product-grid">
                     {% for product in products %}
                     <article class="product-card" data-product-id="{{ product.id }}">
-                        <button class="product-picture" type="button" data-details="{{ product.id }}" aria-label="Детальніше: {{ product.title }}">
+                        <a class="product-picture" href="{{ url_for('product_by_id', product_id=product.id) }}" aria-label="Детальніше: {{ product.title }}">
                             <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="{{ product.title }}" width="220" height="155" {% if loop.index > 4 %}loading="lazy"{% endif %}>
-                        </button>
+                        </a>
                         <div class="product-info">
-                            <h3><button type="button" data-details="{{ product.id }}">{{ product.title }}</button></h3>
+                            <h3><a href="{{ url_for('product_by_id', product_id=product.id) }}">{{ product.title }}</a></h3>
                             <p class="product-price"><strong>{{ product.price }} грн</strong><span>/ кг</span></p>
                             <div class="product-rating"><span class="stars" aria-label="{{ product.rating }} із 5">★★★★★</span><span>{{ product.rating }} <span class="review-count">({{ product.reviews }})</span></span></div>
                             <button type="button" class="add-button" data-add="{{ product.id }}" aria-label="Додати {{ product.title }} в кошик"><i data-lucide="shopping-cart"></i><span>Додати в кошик</span></button>
@@ -128,14 +128,6 @@
         <div class="dialog-heading"><h2 id="cart-title">Ваш кошик <span id="cart-title-count"></span></h2><button class="icon-button" type="button" data-close aria-label="Закрити кошик" title="Закрити"><i data-lucide="x"></i></button></div>
         <div id="cart-items"></div>
         <div class="cart-footer" id="cart-footer" hidden><div><span>Разом</span><strong id="cart-total"></strong></div><button class="text-button" type="button" id="clear-cart"><i data-lucide="trash-2"></i>Очистити кошик</button></div>
-    </dialog>
-
-    <dialog id="product-dialog" class="product-dialog" aria-labelledby="detail-name">
-        <button class="icon-button dialog-close" type="button" data-close aria-label="Закрити" title="Закрити"><i data-lucide="x"></i></button>
-        <img id="detail-image" src="{{ url_for('static', filename='images/apple.png') }}" alt="" width="300" height="240">
-        <span class="stock-label"><i data-lucide="check"></i>В наявності</span>
-        <h2 id="detail-name"></h2><p id="detail-description"></p><p class="detail-price" id="detail-price"></p>
-        <button class="primary-button" type="button" id="detail-add"><i data-lucide="shopping-cart"></i>Додати в кошик</button>
     </dialog>
 
     <dialog id="profile-dialog" aria-labelledby="profile-title">

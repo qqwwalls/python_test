@@ -1,0 +1,26 @@
+.product-page { min-height: 100vh; display: flex; flex-direction: column; }
+.product-page .header-inner { height: 78px; flex-wrap: nowrap; gap: 16px; }
+.catalog-link, .back-link { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; }
+.catalog-link { margin-left: auto; }
+.catalog-link:hover, .back-link:hover { color: var(--green); }
+.detail-main { width: 100%; flex: 1; padding-top: 28px; }
+.back-link { margin-bottom: 24px; color: #617687; }
+.product-detail { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; padding: 32px; background: #fff; border: 1px solid var(--line); border-radius: 6px; }
+.detail-photo { width: 100%; height: auto; aspect-ratio: 1; max-height: 440px; object-fit: contain; }
+.detail-info { min-width: 0; }
+.detail-info h1 { font-size: 34px; line-height: 1.2; margin: 12px 0 16px; overflow-wrap: anywhere; }
+.detail-rating { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; color: #617687; font-size: 13px; }
+.detail-description { max-width: 480px; color: #617687; font-size: 16px; line-height: 1.75; margin: 24px 0; }
+.detail-cost { display: flex; align-items: baseline; gap: 8px; margin: 24px 0; }
+.detail-cost strong { font-size: 30px; }
+.detail-cost > span { color: #617687; }
+.detail-info .primary-button { min-height: 44px; }
+.detail-info .primary-button:disabled { opacity: .55; cursor: not-allowed; }
+.detail-status { min-height: 24px; color: var(--green-dark); margin: 14px 0 0; }
+.product-page .site-footer { width: 100%; }
+@media (max-width: 650px) {
+    .product-detail { grid-template-columns: minmax(0, 1fr); gap: 20px; padding: 22px; }
+    .detail-photo { max-height: 300px; }
+    .detail-info h1 { font-size: 28px; }
+    .detail-main { padding-top: 20px; }
+}

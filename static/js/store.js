@@ -2,6 +2,29 @@
     const products = JSON.parse(document.querySelector("#product-data").textContent);
     const productMap = new Map(products.map(product => [product.id, product]));
     const grid = document.querySelector("#product-grid");
+    const cartKey = "fruitmarket-cart";
+    if (!grid) {
+        const product = products[0];
+        const button = document.querySelector("#detail-add");
+        const status = document.querySelector("#detail-status");
+        button.addEventListener("click", () => {
+            if (!product.available) return;
+            const saved = readSaved(cartKey, {});
+            const cart = saved && typeof saved === "object" && !Array.isArray(saved) ? saved : {};
+            const quantity = Number.isInteger(cart[product.id]) && cart[product.id] > 0 ? cart[product.id] : 0;
+            if (quantity >= 99) {
+                status.textContent = "У кошику вже 99 кг цього товару.";
+                return;
+            }
+            cart[product.id] = quantity + 1;
+            if (save(cartKey, cart)) {
+                button.querySelector("span").textContent = "Додано в кошик";
+                status.textContent = `У кошику: ${cart[product.id]} кг`;
+            } else status.textContent = "Не вдалося зберегти кошик.";
+        });
+        icons();
+        return;
+    }
     const cards = new Map([...grid.children].map(card => [card.dataset.productId, card]));
     const search = document.querySelector("#search");
     const minPrice = document.querySelector("#min-price");
@@ -9,7 +32,6 @@
     const inStock = document.querySelector("#in-stock");
     const sort = document.querySelector("#sort");
     const profileForm = document.querySelector("#profile-form");
-    const cartKey = "fruitmarket-cart";
     let category = "all";
     let toastTimer;
 
@@ -227,19 +249,6 @@
         applyFilters();
     }
 
-    function showDetails(id) {
-        const product = productMap.get(id);
-        if (!product) return;
-        document.querySelector("#detail-name").textContent = product.title;
-        document.querySelector("#detail-description").textContent = product.description;
-        document.querySelector("#detail-price").textContent = `${money(product.price)} / кг`;
-        const image = document.querySelector("#detail-image");
-        image.src = imageFor(product);
-        image.alt = product.title;
-        document.querySelector("#detail-add").dataset.add = product.id;
-        openDialog("product-dialog");
-    }
-
     const info = {
         about: {title: "Про FruitMarket", paragraphs: ["Свіжі фрукти та ягоди для кожного дня.", "У нашому асортименті — яблука, цитрусові, тропічні фрукти та добірні ягоди."]},
         delivery: {title: "Доставка", paragraphs: ["Доставляємо фрукти у зручний для вас час.", "Вартість та час доставки залежать від адреси й обсягу замовлення та узгоджуються окремо."]},
@@ -250,7 +259,6 @@
         const button = event.target.closest("button");
         if (!button) return;
         if (button.hasAttribute("data-add")) addToCart(button.dataset.add, button);
-        else if (button.hasAttribute("data-details")) showDetails(button.dataset.details);
         else if (button.hasAttribute("data-category")) { category = button.dataset.category; applyFilters(); }
         else if (button.hasAttribute("data-reset")) resetFilters();
         else if (button.hasAttribute("data-open")) openDialog(button.dataset.open);
