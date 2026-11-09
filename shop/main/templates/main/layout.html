@@ -30,6 +30,10 @@
                            href="{% url 'about' %}"{% if request.resolver_match.url_name == 'about' %} aria-current="page"{% endif %}>Про проєкт</a>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#technologies">Технології</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link{% if request.resolver_match.url_name == 'registration' %} active{% endif %}"
+                           href="{% url 'registration' %}"{% if request.resolver_match.url_name == 'registration' %} aria-current="page"{% endif %}>Реєстрація</a>
+                    </li>
                     <li class="nav-item"><a class="nav-link" href="https://github.com/qqwwalls/python_test/tree/practice-django-shop">GitHub</a></li>
                 </ul>
             </div>
@@ -45,5 +49,6 @@
         </div>
     </footer>
     <script src="{% static 'main/js/bootstrap.bundle.min.js' %}"></script>
+    {% block scripts %}{% endblock %}
 </body>
 </html>

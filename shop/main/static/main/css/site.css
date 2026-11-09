@@ -25,6 +25,12 @@ main { flex: 1; }
 .footer-note { color: #b9c0c6; }
 .about-content { max-width: 760px; line-height: 1.8; }
 #technologies { scroll-margin-top: 20px; }
+.registration-section { padding-top: 36px; padding-bottom: 36px; }
+.registration-title { font-size: 30px; font-weight: 700; margin-bottom: 24px; }
+.registration-section .form-label, .registration-section .form-check-label { font-size: 14px; }
+.registration-section .form-control { min-height: 44px; border-radius: 5px; }
+.registration-submit { min-width: 160px; min-height: 42px; }
+.registration-result { font-size: 14px; }
 
 @media (max-width: 767px) {
     .welcome { padding: 30px 0; }
