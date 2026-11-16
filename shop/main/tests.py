@@ -1,10 +1,68 @@
 import json
+from io import BytesIO
+from pathlib import Path
+from tempfile import TemporaryDirectory
 from unittest.mock import patch
 
+from PIL import Image
+
 from django.contrib.staticfiles import finders
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.template.loader import render_to_string
-from django.test import Client, SimpleTestCase
+from django.test import Client, SimpleTestCase, TestCase, override_settings
 from django.urls import reverse
+
+from .models import Category, Post, Tag
+
+
+class PostModelsTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.category = Category.objects.create(name="Програмування")
+        cls.post = Post.objects.create(
+            title="Знайомство з Django",
+            content="Перший допис про моделі Django.",
+            category=cls.category,
+        )
+
+    def test_post_can_be_saved_without_optional_fields(self):
+        post = Post.objects.get(pk=self.post.pk)
+        self.assertEqual(str(post), "Знайомство з Django")
+        self.assertEqual(str(post.category), "Програмування")
+        self.assertIsNotNone(post.created_at)
+        self.assertFalse(post.is_published)
+        self.assertEqual(post.status, "draft")
+        self.assertFalse(post.image)
+        self.assertFalse(post.tags.exists())
+
+    def test_tags_can_be_assigned_and_deleted_independently(self):
+        python = Tag.objects.create(name="Python")
+        django = Tag.objects.create(name="Django")
+        self.post.tags.add(python, django)
+        self.assertEqual(str(python), "Python")
+        self.assertSetEqual(set(self.post.tags.all()), {python, django})
+        python.delete()
+        self.assertTrue(Post.objects.filter(pk=self.post.pk).exists())
+        self.assertEqual(list(self.post.tags.all()), [django])
+
+    def test_deleting_category_deletes_posts_but_keeps_tags(self):
+        tag = Tag.objects.create(name="Python")
+        self.post.tags.add(tag)
+        self.category.delete()
+        self.assertFalse(Post.objects.filter(pk=self.post.pk).exists())
+        self.assertTrue(Tag.objects.filter(pk=tag.pk).exists())
+
+    def test_post_image_is_saved_in_media_posts(self):
+        content = BytesIO()
+        Image.new("RGB", (2, 2)).save(content, format="PNG")
+        image = SimpleUploadedFile("test.png", content.getvalue(), content_type="image/png")
+        with TemporaryDirectory() as directory, override_settings(MEDIA_ROOT=directory):
+            self.post.image = image
+            self.post.save()
+            self.post.refresh_from_db()
+            self.assertTrue(self.post.image.name.startswith("posts/"))
+            self.assertTrue(Path(self.post.image.path).is_file())
+            self.assertTrue(self.post.image.url.startswith("/media/posts/"))
 
 
 class StaticFilesTests(SimpleTestCase):
