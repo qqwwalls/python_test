@@ -6,6 +6,7 @@ __pycache__/
 .DS_Store
 .env
 .env.*
+!.env.example
 shop/staticfiles/
 shop/media/
 personal_cv/staticfiles/
