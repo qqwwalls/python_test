@@ -31,10 +31,14 @@
                     </li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#technologies">Технології</a></li>
                     <li class="nav-item">
+                        <a class="nav-link{% if request.resolver_match.url_name == 'cards' or request.resolver_match.url_name == 'create_card' %} active{% endif %}"
+                           href="{% url 'cards' %}"{% if request.resolver_match.url_name == 'cards' or request.resolver_match.url_name == 'create_card' %} aria-current="page"{% endif %}>Картки</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link{% if request.resolver_match.url_name == 'registration' %} active{% endif %}"
                            href="{% url 'registration' %}"{% if request.resolver_match.url_name == 'registration' %} aria-current="page"{% endif %}>Реєстрація</a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="https://github.com/qqwwalls/python_test/tree/practice-django-shop">GitHub</a></li>
+                    <li class="nav-item"><a class="nav-link" href="https://github.com/qqwwalls/python_test/tree/practice-django-card-form">GitHub</a></li>
                 </ul>
             </div>
         </div>

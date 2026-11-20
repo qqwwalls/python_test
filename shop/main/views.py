@@ -1,10 +1,30 @@
 import json
+import uuid
 
+from django.contrib import messages
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views.decorators.http import require_http_methods
 
-from .forms import RegistrationForm
+from .forms import CardForm, RegistrationForm
+from .models import Card
+
+
+@require_http_methods(["GET"])
+def cards(request):
+    return render(request, "main/cards.html", {"cards": Card.objects.order_by("-created_at", "-pk")})
+
+
+@require_http_methods(["GET", "POST"])
+def create_card(request):
+    form = CardForm(request.POST, request.FILES) if request.method == "POST" else CardForm()
+    if request.method == "POST" and form.is_valid():
+        image = form.cleaned_data["image"]
+        image.name = f"{uuid.uuid4().hex}.{image.image.format.lower()}"
+        card = Card.objects.create(**form.cleaned_data)
+        messages.success(request, f"Картку «{card.title}» успішно додано.")
+        return redirect("cards")
+    return render(request, "main/create_card.html", {"form": form})
 
 
 def home(request):

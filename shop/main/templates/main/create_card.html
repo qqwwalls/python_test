@@ -1,0 +1,45 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Додати картку — Python Web Lab{% endblock %}
+
+{% block content %}
+<section class="container card-form-section">
+    <div class="card-form-wrap mx-auto">
+        <a class="back-link" href="{% url 'cards' %}">← До всіх карток</a>
+        <h1 class="page-title">Додати картку</h1>
+        <p class="text-secondary mb-4">Збережіть свою ідею, додавши назву, опис і зображення.</p>
+        <div class="card form-panel">
+            <div class="card-body">
+                {% if form.errors %}
+                <div class="alert alert-danger mb-4" role="alert">
+                    <strong>Картку ще не збережено.</strong> Перевірте виділені поля.
+                </div>
+                {% endif %}
+                <form method="post" action="{% url 'create_card' %}" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
+                    {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger" role="alert">{{ error }}</div>
+                    {% endfor %}
+                    {% for field in form %}
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold" for="{{ field.id_for_label }}">{{ field.label }} <span class="text-danger" aria-hidden="true">*</span></label>
+                        {{ field }}
+                        <div class="form-text" id="{{ field.id_for_label }}_help">{{ field.help_text }}</div>
+                        <div class="invalid-feedback d-block" id="{{ field.id_for_label }}_error">
+                            {% for error in field.errors %}<div>{{ error }}</div>{% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% if form.is_bound %}
+                    <p class="small text-secondary">Перед повторним надсиланням оберіть файл зображення ще раз.</p>
+                    {% endif %}
+                    <div class="d-flex flex-wrap gap-2 pt-2">
+                        <button class="btn btn-primary px-4" type="submit">Зберегти картку</button>
+                        <a class="btn btn-outline-secondary px-4" href="{% url 'cards' %}">Скасувати</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Картки — Python Web Lab{% endblock %}
+
+{% block content %}
+<section class="container cards-section">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+        <div>
+            <h1 class="page-title mb-2">Колекція карток</h1>
+            <p class="text-secondary mb-0">Ідеї та проєкти, якими хочеться поділитися.</p>
+        </div>
+        <a class="btn btn-primary px-4" href="{% url 'create_card' %}">+ Додати картку</a>
+    </div>
+    {% for message in messages %}
+    <div class="alert alert-success" role="status">{{ message }}</div>
+    {% endfor %}
+    <div class="row g-4">
+        {% for card in cards %}
+        <div class="col-md-6 col-lg-4">
+            <article class="card saved-card h-100">
+                <img class="card-img-top" src="{{ card.image.url }}" alt="{{ card.title }}" width="640" height="360">
+                <div class="card-body">
+                    <p class="small text-secondary mb-2">{{ card.created_at|date:'d.m.Y' }}</p>
+                    <h2 class="h4 card-title">{{ card.title }}</h2>
+                    <p class="card-text mb-0">{{ card.description }}</p>
+                </div>
+            </article>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="empty-cards text-center bg-white">
+                <span class="empty-card-icon" aria-hidden="true">+</span>
+                <h2 class="h4">Тут будуть ваші картки</h2>
+                <p class="text-secondary">Додайте першу ідею до своєї колекції.</p>
+                <a class="btn btn-outline-primary" href="{% url 'create_card' %}">Створити першу картку</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
